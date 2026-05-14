@@ -18,6 +18,7 @@ The project will be developed using React, Vite, TypeScript, and Tailwind CSS.
 - Vite
 - TypeScript
 - Tailwind CSS
+- Phaser (hangman rendering + death animation)
 
 ## Tooling
 
@@ -324,21 +325,34 @@ The player starts with:
 6 vidas
 ```
 
-Lives are visually represented using a classic hangman drawing (SVG), with each lost life adding a body part.
+Lives are visually represented using a Phaser canvas that renders a classic hangman drawing. Each lost life adds a body part progressively.
 
 Stages:
 
 | Lives | Mistakes | Body Part |
 |---|---|---|
 | 6 | 0 | Empty gallows (base, post, beam, diagonal support, rope) |
-| 5 | 1 | Head |
+| 5 | 1 | Head (with eyes and mouth) |
 | 4 | 2 | Body |
 | 3 | 3 | Left arm |
 | 2 | 4 | Right arm |
 | 1 | 5 | Left leg |
-| 0 | 6 | Right leg (game over) |
+| 0 | 6 | Right leg (triggers death animation) |
 
-The gallows uses a wood/brown color (`amber-800` / `amber-600`), and the body parts use a contrasting gray color (`gray-700` / `gray-300`).
+The gallows uses wood tones (brown/gold fill with darker highlights). Body parts use a dark charcoal color. A green ground strip with grass sits at the bottom.
+
+The Phaser canvas is 300×250px, embedded via a React wrapper component that passes `remainingLives` and `totalLives` as props.
+
+## Death Animation
+
+When `remainingLives` reaches 0:
+
+1. **Fire** — body catches fire while hanging. Phaser particle emitter sprays orange/red/yellow flames for ~1.5s
+2. **Explosion** — white flash expands and fades, 40 fire particles burst in all directions, 30 dark debris chunks fly outward
+3. **Body parts** — head, body, arms, and legs are individually tweened in random directions with spin (up to 1080° rotation) and fade out over ~1–1.5s
+4. **Rope snap** — rope redrawn as a frayed broken end on the gallows
+
+Animation state machine: `idle` → `burning` → `exploding` → `done`.
 
 ---
 
@@ -365,6 +379,8 @@ Reveal full original word.
 
 Disable further input.
 
+Trigger death animation: fire → explosion → body parts fly away.
+
 ---
 
 # New Game
@@ -390,7 +406,8 @@ Behavior:
 src/
   components/
     GameBoard/
-    HangmanDrawing/
+    HangmanScene.ts       (Phaser scene: drawing + death animation)
+    PhaserHangman.tsx      (React wrapper for Phaser canvas)
     Keyboard/
     LivesDisplay/
     SecretWordModal/

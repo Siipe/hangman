@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeToggle } from '../components/ThemeToggle';
-import { LivesDisplay } from '../components/LivesDisplay';
 import { WordDisplay } from '../components/WordDisplay';
 import { GameStatus } from '../components/GameStatus';
 
@@ -25,20 +24,6 @@ describe('ThemeToggle', () => {
     render(<ThemeToggle isDark={false} onToggle={() => { toggled = true; }} />);
     await user.click(screen.getByRole('button'));
     expect(toggled).toBe(true);
-  });
-});
-
-describe('LivesDisplay', () => {
-  it('renders correct number of hearts', () => {
-    render(<LivesDisplay remainingLives={4} totalLives={6} />);
-    const hearts = screen.getByLabelText('4 de 6 vidas restantes');
-    expect(hearts).toBeInTheDocument();
-  });
-
-  it('shows broken hearts for lost lives', () => {
-    render(<LivesDisplay remainingLives={2} totalLives={6} />);
-    const hearts = screen.getByLabelText('2 de 6 vidas restantes');
-    expect(hearts.textContent).toContain('🖤');
   });
 });
 

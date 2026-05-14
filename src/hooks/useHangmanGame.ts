@@ -4,7 +4,7 @@ import { validateSecretWord } from '../utils/validateSecretWord';
 
 export type GameStatus = 'idle' | 'playing' | 'won' | 'lost';
 
-export interface GameState {
+interface GameState {
   originalWord: string;
   comparableWord: string;
   guessedCharacters: string[];
