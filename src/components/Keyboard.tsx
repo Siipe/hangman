@@ -1,8 +1,10 @@
+import { normalizeInput } from '../utils/normalizeInput';
+
 const KEYBOARD_ROWS = [
+  ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
   ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
   ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
   ['Z', 'X', 'C', 'V', 'B', 'N', 'M'],
-  ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
 ];
 
 interface KeyboardProps {
@@ -17,12 +19,12 @@ function keyState(
   guessedCharacters: string[],
   wrongCharacters: string[]
 ): 'default' | 'correct' | 'wrong' {
-  const lower = char.toLowerCase();
-  if (guessedCharacters.some((c) => c.toLowerCase() === lower || c.toUpperCase() === char)) {
-    return 'correct';
-  }
-  if (wrongCharacters.some((c) => c.toLowerCase() === lower || c.toUpperCase() === char)) {
+  const upper = char.toUpperCase();
+  if (wrongCharacters.includes(upper)) {
     return 'wrong';
+  }
+  if (guessedCharacters.some((c) => normalizeInput(c) === upper)) {
+    return 'correct';
   }
   return 'default';
 }

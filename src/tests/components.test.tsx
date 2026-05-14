@@ -44,23 +44,26 @@ describe('LivesDisplay', () => {
 
 describe('WordDisplay', () => {
   it('shows underscores for unrevealed letters', () => {
-    render(<WordDisplay originalWord="abc" guessedCharacters={[]} />);
+    render(<WordDisplay originalWord="ABC" guessedCharacters={[]} />);
     const container = screen.getByLabelText('Palavra secreta');
-    expect(container.textContent).toContain('_');
+    const letters = container.querySelectorAll('span span');
+    expect(letters.length).toBeGreaterThan(0);
+    for (const letter of letters) {
+      expect(letter.textContent).toBe('');
+    }
   });
 
   it('shows revealed characters', () => {
-    render(<WordDisplay originalWord="abc" guessedCharacters={['a']} />);
+    render(<WordDisplay originalWord="ABC" guessedCharacters={['A']} />);
     const container = screen.getByLabelText('Palavra secreta');
-    expect(container.textContent).toContain('a');
-    expect(container.textContent).toContain('_');
+    expect(container.textContent).toContain('A');
   });
 
   it('shows spaces as gaps', () => {
-    render(<WordDisplay originalWord="a b" guessedCharacters={['a', 'b']} />);
+    render(<WordDisplay originalWord="A B" guessedCharacters={['A', 'B']} />);
     const container = screen.getByLabelText('Palavra secreta');
-    expect(container.textContent).toContain('a');
-    expect(container.textContent).toContain('b');
+    expect(container.textContent).toContain('A');
+    expect(container.textContent).toContain('B');
   });
 });
 

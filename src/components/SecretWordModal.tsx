@@ -7,7 +7,7 @@ interface SecretWordModalProps {
 
 export function SecretWordModal({ onConfirm, error }: SecretWordModalProps) {
   const [word, setWord] = useState('');
-  const [hideWord, setHideWord] = useState(false);
+  const [hideWord, setHideWord] = useState(true);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

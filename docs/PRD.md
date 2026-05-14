@@ -92,6 +92,7 @@ Requirements:
 
 - Manual toggle
 - Persist preference using `localStorage`
+- Class-based strategy via `@custom-variant dark (&:where(.dark, .dark *))` in Tailwind v4
 
 ---
 
@@ -151,6 +152,16 @@ Display:
 ```txt
 _ _ _ _   _ _ _ _ _ _ _ _ _
 ```
+
+---
+
+## Word Wrapping
+
+Each word must be treated as an unbreakable unit during line wrapping.
+
+- Words should not break mid-word across lines
+- If a whole word does not fit on the current line, it must wrap entirely to the next line
+- Single-line display is preferred when all words fit
 
 ---
 

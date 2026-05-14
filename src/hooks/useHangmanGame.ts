@@ -47,7 +47,7 @@ export function useHangmanGame() {
     const comparableWord = normalizeInput(word);
 
     setState({
-      originalWord: word.trim().replace(/\s+/g, ' '),
+      originalWord: word.trim().replace(/\s+/g, ' ').toUpperCase(),
       comparableWord,
       guessedCharacters: [],
       wrongCharacters: [],
@@ -63,26 +63,19 @@ export function useHangmanGame() {
       if (state.status !== 'playing') return;
 
       const upperChar = char.toUpperCase();
-      const lowerChar = char.toLowerCase();
 
       if (
-        state.guessedCharacters.includes(lowerChar) ||
-        state.guessedCharacters.includes(upperChar) ||
-        state.wrongCharacters.includes(lowerChar) ||
+        state.guessedCharacters.some((c) => normalizeInput(c) === upperChar) ||
         state.wrongCharacters.includes(upperChar)
       ) {
         return;
       }
 
-      if (state.comparableWord.includes(lowerChar) || state.comparableWord.includes(upperChar)) {
+      if (state.comparableWord.includes(upperChar)) {
         const newGuessed = [...state.guessedCharacters];
 
         for (const originalChar of state.originalWord) {
-          const normalizedOriginalChar = normalizeInput(originalChar);
-          if (
-            normalizedOriginalChar === lowerChar ||
-            normalizedOriginalChar === upperChar
-          ) {
+          if (normalizeInput(originalChar) === upperChar) {
             if (!newGuessed.includes(originalChar)) {
               newGuessed.push(originalChar);
             }
@@ -97,7 +90,7 @@ export function useHangmanGame() {
           status: isWin ? 'won' : 'playing',
         }));
       } else {
-        const newWrong = [...state.wrongCharacters, char];
+        const newWrong = [...state.wrongCharacters, upperChar];
         const newLives = state.remainingLives - 1;
 
         setState((prev) => ({

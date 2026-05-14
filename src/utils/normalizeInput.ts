@@ -53,5 +53,6 @@ export function normalizeInput(input: string): string {
   return input
     .replace(ACCENT_REGEX, (char) => ACCENT_MAP[char] || char)
     .replace(/\s+/g, ' ')
-    .trim();
+    .trim()
+    .toUpperCase();
 }
