@@ -19,6 +19,7 @@ The project will be developed using React, Vite, TypeScript, and Tailwind CSS.
 - TypeScript
 - Tailwind CSS
 - Phaser (hangman rendering + death animation)
+- Lucide React (icons)
 
 ## Tooling
 
@@ -91,7 +92,7 @@ No backend/server is required.
 
 Requirements:
 
-- Manual toggle
+- Manual toggle (button fixed top-right, `z-index` above modal overlay)
 - Persist preference using `localStorage`
 - Class-based strategy via `@custom-variant dark (&:where(.dark, .dark *))` in Tailwind v4
 
@@ -266,28 +267,32 @@ The original text must always be preserved for rendering and final reveal.
 
 # Secret Word Modal
 
-Before the game starts, the application must display a modal where Player 1 enters the secret word or phrase.
+Before the game starts, the application must display a modal where Player 1 sets up the game.
+
+Title: "Criar jogo"
 
 ## Modal Requirements
 
 Fields:
 
-- Secret word input
-- Checkbox:
-  ```txt
-  Esconder palavra ao digitar
-  ```
-  Enabled (checked) by default.
+- Secret word input (with eye toggle to reveal/hide)
+- Hint input ("Dica") — required
+- Eye icon toggle button inside the secret word input (Lucide React `Eye` / `EyeOff` icons)
+- Hidden by default
 
 Behavior:
 
-- Input is always `type="text"` — never `type="password"`
-- If checked:
-  - characters are masked using `-webkit-text-security: disc`
-- If unchecked:
-  - characters are visible
+- Secret word input is always `type="text"` — never `type="password"`
+- Eye toggle: click to reveal characters, click again to mask using `-webkit-text-security: disc`
 - Browser password management is fully disabled (`autocomplete="off"`, `spellcheck="false"`, `data-lpignore`, `data-1p-ignore`, unique `name` attribute)
 - No browser save/update/autocomplete prompts of any kind
+
+## Hint Validation
+
+The hint field ("Dica") is required and validated client-side in the modal:
+
+- Must not be empty
+- Must not equal the secret word (case-insensitive, accent-normalized comparison)
 
 ---
 
@@ -353,6 +358,10 @@ When `remainingLives` reaches 0:
 4. **Rope snap** — rope redrawn as a frayed broken end on the gallows
 
 Animation state machine: `idle` → `burning` → `exploding` → `done`.
+
+## Hint Display
+
+The hint ("Dica") entered by Player 1 is displayed during gameplay between the hangman canvas and the word display, labeled **Dica:** in a muted style.
 
 ---
 

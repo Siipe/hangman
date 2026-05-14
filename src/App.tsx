@@ -17,8 +17,8 @@ export default function App() {
   const [modalError, setModalError] = useState<string | undefined>();
 
   const handleStartGame = useCallback(
-    (word: string) => {
-      const result = startGame(word);
+    (word: string, hint: string) => {
+      const result = startGame(word, hint);
       if (!result.valid) {
         setModalError(result.error);
       } else {
@@ -61,6 +61,11 @@ export default function App() {
         {(state.status === 'playing' || state.status === 'won' || state.status === 'lost') && (
           <>
             <PhaserHangman remainingLives={state.remainingLives} totalLives={TOTAL_LIVES} />
+            {state.hint && (
+              <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-2">
+                <span className="font-semibold">Dica:</span> {state.hint}
+              </p>
+            )}
             <WordDisplay originalWord={state.originalWord} guessedCharacters={state.guessedCharacters} />
             <Keyboard
               guessedCharacters={state.guessedCharacters}

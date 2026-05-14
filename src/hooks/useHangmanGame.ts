@@ -7,6 +7,7 @@ export type GameStatus = 'idle' | 'playing' | 'won' | 'lost';
 interface GameState {
   originalWord: string;
   comparableWord: string;
+  hint: string;
   guessedCharacters: string[];
   wrongCharacters: string[];
   remainingLives: number;
@@ -19,6 +20,7 @@ function createInitialState(): GameState {
   return {
     originalWord: '',
     comparableWord: '',
+    hint: '',
     guessedCharacters: [],
     wrongCharacters: [],
     remainingLives: INITIAL_LIVES,
@@ -38,7 +40,7 @@ function checkWin(originalWord: string, guessedCharacters: string[]): boolean {
 export function useHangmanGame() {
   const [state, setState] = useState<GameState>(createInitialState);
 
-  const startGame = useCallback((word: string): { valid: boolean; error?: string } => {
+  const startGame = useCallback((word: string, hint: string): { valid: boolean; error?: string } => {
     const validation = validateSecretWord(word);
     if (!validation.valid) {
       return validation;
@@ -49,6 +51,7 @@ export function useHangmanGame() {
     setState({
       originalWord: word.trim().replace(/\s+/g, ' ').toUpperCase(),
       comparableWord,
+      hint: hint.trim().toUpperCase(),
       guessedCharacters: [],
       wrongCharacters: [],
       remainingLives: INITIAL_LIVES,
