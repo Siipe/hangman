@@ -14,13 +14,28 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 # === BUILD PROJECT ===
-echo -e "${GREEN}📦 Building project...${NC}"
+echo -e "${GREEN}📦 Installing dependencies...${NC}"
 npm ci
 if [ $? -ne 0 ]; then
   echo -e "${RED}❌ npm ci failed. Aborting.${NC}"
   exit 1
 fi
 
+echo -e "${GREEN}🔍 Linting...${NC}"
+npm run lint
+if [ $? -ne 0 ]; then
+  echo -e "${RED}❌ Lint failed. Aborting.${NC}"
+  exit 1
+fi
+
+echo -e "${GREEN}🧪 Running tests...${NC}"
+npm test
+if [ $? -ne 0 ]; then
+  echo -e "${RED}❌ Tests failed. Aborting.${NC}"
+  exit 1
+fi
+
+echo -e "${GREEN}📦 Building...${NC}"
 npm run build
 if [ $? -ne 0 ]; then
   echo -e "${RED}❌ Build failed. Aborting.${NC}"

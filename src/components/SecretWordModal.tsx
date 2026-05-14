@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type CSSProperties, type SyntheticEvent } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 
 interface SecretWordModalProps {
@@ -12,7 +12,7 @@ export function SecretWordModal({ onConfirm, error }: SecretWordModalProps) {
   const [hideWord, setHideWord] = useState(true);
   const [localError, setLocalError] = useState<string | undefined>();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLocalError(undefined);
 
@@ -47,7 +47,7 @@ export function SecretWordModal({ onConfirm, error }: SecretWordModalProps) {
               value={word}
               onChange={(e) => setWord(e.target.value)}
               className="w-full p-2.5 sm:p-3 pr-12 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
-              style={hideWord ? ({ WebkitTextSecurity: 'disc' } as React.CSSProperties) : undefined}
+              style={hideWord ? ({ WebkitTextSecurity: 'disc' } as CSSProperties) : undefined}
               placeholder="Palavra ou frase secreta"
               autoComplete="off"
               autoCorrect="off"
