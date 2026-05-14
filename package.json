@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "deploy": "./deploy.sh"
   },
   "dependencies": {
     "phaser": "4.1.0",
