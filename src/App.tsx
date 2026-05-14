@@ -48,11 +48,13 @@ export default function App() {
   }, [state.status, guessCharacter]);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors">
+    <div className="min-h-dvh bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors">
       <ThemeToggle isDark={isDark} onToggle={toggleDark} />
 
-      <main className="container mx-auto px-4 py-8 max-w-2xl">
-        <h1 className="text-3xl font-bold text-center mb-8">Forca do TioSiipe</h1>
+      <main className="mx-auto px-3 sm:px-4 py-4 sm:py-8 max-w-2xl">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-4 sm:mb-8">
+          Forca do TioSiipe
+        </h1>
 
         {state.status === 'idle' && (
           <SecretWordModal onConfirm={handleStartGame} error={modalError} />
@@ -62,11 +64,14 @@ export default function App() {
           <>
             <PhaserHangman remainingLives={state.remainingLives} totalLives={TOTAL_LIVES} />
             {state.hint && (
-              <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-2">
+              <p className="text-center text-sm sm:text-base text-gray-500 dark:text-gray-400 mb-2">
                 <span className="font-semibold">Dica:</span> {state.hint}
               </p>
             )}
-            <WordDisplay originalWord={state.originalWord} guessedCharacters={state.guessedCharacters} />
+            <WordDisplay
+              originalWord={state.originalWord}
+              guessedCharacters={state.guessedCharacters}
+            />
             <Keyboard
               guessedCharacters={state.guessedCharacters}
               wrongCharacters={state.wrongCharacters}
@@ -76,10 +81,10 @@ export default function App() {
             <GameStatus status={state.status} originalWord={state.originalWord} />
 
             {(state.status === 'won' || state.status === 'lost') && (
-              <div className="text-center mt-4">
+              <div className="text-center mt-2 sm:mt-4">
                 <button
                   onClick={handleNewGame}
-                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors cursor-pointer"
+                  className="px-5 py-2.5 sm:px-6 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors cursor-pointer text-sm sm:text-base"
                 >
                   Novo jogo
                 </button>

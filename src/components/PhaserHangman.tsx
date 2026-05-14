@@ -55,10 +55,10 @@ export function PhaserHangman({ remainingLives, totalLives }: PhaserHangmanProps
   }, [remainingLives, totalLives]);
 
   return (
-    <div className="flex justify-center my-4">
+    <div className="flex justify-center my-2 sm:my-4 w-full">
       <div
         ref={containerRef}
-        className="w-[300px] h-[250px] rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800"
+        className="w-full max-w-[300px] rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800"
       />
     </div>
   );

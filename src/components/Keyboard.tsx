@@ -37,9 +37,9 @@ const stateClasses: Record<string, string> = {
 
 export function Keyboard({ guessedCharacters, wrongCharacters, disabled, onKeyPress }: KeyboardProps) {
   return (
-    <div className="flex flex-col items-center gap-2 my-4">
+    <div className="flex flex-col items-center gap-1 sm:gap-2 my-2 sm:my-4 w-full max-w-lg mx-auto">
       {KEYBOARD_ROWS.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex gap-1">
+        <div key={rowIndex} className="flex justify-center gap-0.5 sm:gap-1.5 w-full px-0.5">
           {row.map((char) => {
             const state = keyState(char, guessedCharacters, wrongCharacters);
             return (
@@ -47,7 +47,7 @@ export function Keyboard({ guessedCharacters, wrongCharacters, disabled, onKeyPr
                 key={char}
                 onClick={() => onKeyPress(char)}
                 disabled={disabled || state !== 'default'}
-                className={`w-10 h-10 rounded-md font-semibold text-sm transition-colors cursor-pointer disabled:cursor-not-allowed ${stateClasses[state]} disabled:opacity-70`}
+                className={`w-7 h-9 sm:w-10 sm:h-10 rounded-md font-semibold text-xs sm:text-sm transition-colors cursor-pointer disabled:cursor-not-allowed ${stateClasses[state]} disabled:opacity-70`}
                 aria-label={`Letra ${char}`}
               >
                 {char}

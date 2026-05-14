@@ -34,19 +34,19 @@ export function SecretWordModal({ onConfirm, error }: SecretWordModalProps) {
   const displayError = localError || error;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-2xl max-w-md w-full mx-4">
-        <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-3 sm:p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-xl p-4 sm:p-6 shadow-2xl max-w-md w-full">
+        <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-white">
           Criar jogo
         </h2>
         <form onSubmit={handleSubmit} autoComplete="off">
-          <div className="relative mb-3">
+          <div className="relative mb-2 sm:mb-3">
             <input
               type="text"
               name="secret-word"
               value={word}
               onChange={(e) => setWord(e.target.value)}
-              className="w-full p-3 pr-12 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2.5 sm:p-3 pr-12 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
               style={hideWord ? ({ WebkitTextSecurity: 'disc' } as React.CSSProperties) : undefined}
               placeholder="Palavra ou frase secreta"
               autoComplete="off"
@@ -60,10 +60,10 @@ export function SecretWordModal({ onConfirm, error }: SecretWordModalProps) {
             <button
               type="button"
               onClick={() => setHideWord(!hideWord)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer p-1"
               aria-label={hideWord ? 'Mostrar palavra' : 'Esconder palavra'}
             >
-              {hideWord ? <EyeOff size={20} /> : <Eye size={20} />}
+              {hideWord ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
           <input
@@ -71,7 +71,7 @@ export function SecretWordModal({ onConfirm, error }: SecretWordModalProps) {
             name="secret-hint"
             value={hint}
             onChange={(e) => setHint(e.target.value)}
-            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3"
+            className="w-full p-2.5 sm:p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2 sm:mb-3"
             placeholder="Dica"
             autoComplete="off"
             autoCorrect="off"
@@ -79,13 +79,13 @@ export function SecretWordModal({ onConfirm, error }: SecretWordModalProps) {
             spellCheck={false}
           />
           {displayError && (
-            <p className="text-red-500 dark:text-red-400 text-sm mb-3" role="alert">
+            <p className="text-red-500 dark:text-red-400 text-xs sm:text-sm mb-2 sm:mb-3" role="alert">
               {displayError}
             </p>
           )}
           <button
             type="submit"
-            className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors cursor-pointer"
+            className="w-full py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors cursor-pointer text-sm sm:text-base"
           >
             Começar jogo
           </button>
