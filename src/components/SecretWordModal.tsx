@@ -20,13 +20,21 @@ export function SecretWordModal({ onConfirm, error }: SecretWordModalProps) {
         <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
           Digite a palavra secreta
         </h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <input
-            type={hideWord ? 'password' : 'text'}
+            type="text"
+            name="secret-word"
             value={word}
             onChange={(e) => setWord(e.target.value)}
             className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3"
+            style={hideWord ? ({ WebkitTextSecurity: 'disc' } as React.CSSProperties) : undefined}
             placeholder="Palavra ou frase secreta"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck={false}
+            data-lpignore="true"
+            data-1p-ignore=""
             autoFocus
           />
           <label className="flex items-center gap-2 mb-4 cursor-pointer text-gray-700 dark:text-gray-300">
