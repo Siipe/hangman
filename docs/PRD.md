@@ -147,11 +147,9 @@ Example:
 arma lendaria
 ```
 
-Display:
+Display: unrevealed letters are left blank, with a bottom border as visual placeholder.
 
-```txt
-_ _ _ _   _ _ _ _ _ _ _ _ _
-```
+Revealed letters display the actual character.
 
 ---
 
@@ -162,6 +160,20 @@ Each word must be treated as an unbreakable unit during line wrapping.
 - Words should not break mid-word across lines
 - If a whole word does not fit on the current line, it must wrap entirely to the next line
 - Single-line display is preferred when all words fit
+
+---
+
+## Case Normalization
+
+All text after Player 1's input is normalized to uppercase.
+
+- `originalWord` stored as uppercase
+- `comparableWord` stored as uppercase
+- `guessedCharacters` stores original uppercase characters
+- `wrongCharacters` stored as uppercase
+- Player 2 input (lowercase or uppercase) is always mapped to uppercase before processing
+
+Display always renders uppercase characters.
 
 ---
 
@@ -194,17 +206,35 @@ The application must reject:
 
 # Accent Mapping Rules
 
-The game must preserve the original input while internally mapping accented characters to comparable base characters.
+The game must preserve the original input while internally mapping accented characters to comparable base characters, then normalizing to uppercase.
 
-Examples:
+Full Portuguese accent map:
 
-| Original | Comparable |
-|---|---|
-| á | a |
-| à | a |
-| ã | a |
-| â | a |
-| ç | c |
+| Original | Base | Original | Base |
+|---|---|---|---|
+| á | A | Á | A |
+| à | A | À | A |
+| ã | A | Ã | A |
+| â | A | Â | A |
+| ä | A | Ä | A |
+| é | E | É | E |
+| è | E | È | E |
+| ê | E | Ê | E |
+| ë | E | Ë | E |
+| í | I | Í | I |
+| ì | I | Ì | I |
+| î | I | Î | I |
+| ï | I | Ï | I |
+| ó | O | Ó | O |
+| ò | O | Ò | O |
+| õ | O | Õ | O |
+| ô | O | Ô | O |
+| ö | O | Ö | O |
+| ú | U | Ú | U |
+| ù | U | Ù | U |
+| û | U | Û | U |
+| ü | U | Ü | U |
+| ç | C | Ç | C |
 
 Example:
 
@@ -213,7 +243,7 @@ Original Input:
 maçã verde
 
 Comparable Internal Value:
-maca verde
+MACA VERDE
 ```
 
 If the player guesses:
@@ -246,13 +276,17 @@ Fields:
   ```txt
   Esconder palavra ao digitar
   ```
+  Enabled (checked) by default.
 
 Behavior:
 
+- Input is always `type="text"` — never `type="password"`
 - If checked:
-  - input behaves like password
+  - characters are masked using `-webkit-text-security: disc`
 - If unchecked:
-  - input is visible
+  - characters are visible
+- Browser password management is fully disabled (`autocomplete="off"`, `spellcheck="false"`, `data-lpignore`, `data-1p-ignore`, unique `name` attribute)
+- No browser save/update/autocomplete prompts of any kind
 
 ---
 
@@ -276,9 +310,9 @@ The application must include a clickable on-screen keyboard.
 Requirements:
 
 - QWERTY-like layout
-- Support letters
-- Support numbers
-- Disabled/highlighted states for used keys
+- Numbers row on top (0-9), followed by letter rows (QWERTY)
+- Disabled/highlighted states for used keys (correct = green, wrong = red)
+- Accent-aware key state: keys highlight correctly when original word contains accented variants
 
 ---
 
@@ -290,15 +324,21 @@ The player starts with:
 6 vidas
 ```
 
-Lives must be visually represented using hearts.
+Lives are visually represented using a classic hangman drawing (SVG), with each lost life adding a body part.
 
-Example:
+Stages:
 
-```txt
-❤️ ❤️ ❤️ ❤️ ❤️ ❤️
-```
+| Lives | Mistakes | Body Part |
+|---|---|---|
+| 6 | 0 | Empty gallows (base, post, beam, diagonal support, rope) |
+| 5 | 1 | Head |
+| 4 | 2 | Body |
+| 3 | 3 | Left arm |
+| 2 | 4 | Right arm |
+| 1 | 5 | Left leg |
+| 0 | 6 | Right leg (game over) |
 
-Wrong guesses remove hearts progressively.
+The gallows uses a wood/brown color (`amber-800` / `amber-600`), and the body parts use a contrasting gray color (`gray-700` / `gray-300`).
 
 ---
 
@@ -350,9 +390,10 @@ Behavior:
 src/
   components/
     GameBoard/
+    HangmanDrawing/
     Keyboard/
-    SecretWordModal/
     LivesDisplay/
+    SecretWordModal/
     ThemeToggle/
     WordDisplay/
     GameStatus/
