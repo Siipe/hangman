@@ -2,7 +2,7 @@ import { useEffect, useCallback } from 'react';
 import { useDarkMode } from './hooks/useDarkMode';
 import { useHangmanGame } from './hooks/useHangmanGame';
 import { ThemeToggle } from './components/ThemeToggle';
-import { HangmanDrawing } from './components/HangmanDrawing';
+import { PhaserHangman } from './components/PhaserHangman';
 import { WordDisplay } from './components/WordDisplay';
 import { Keyboard } from './components/Keyboard';
 import { SecretWordModal } from './components/SecretWordModal';
@@ -60,7 +60,7 @@ export default function App() {
 
         {(state.status === 'playing' || state.status === 'won' || state.status === 'lost') && (
           <>
-            <HangmanDrawing remainingLives={state.remainingLives} totalLives={TOTAL_LIVES} />
+            <PhaserHangman remainingLives={state.remainingLives} totalLives={TOTAL_LIVES} />
             <WordDisplay originalWord={state.originalWord} guessedCharacters={state.guessedCharacters} />
             <Keyboard
               guessedCharacters={state.guessedCharacters}
